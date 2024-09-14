@@ -1,3 +1,8 @@
+#=========================================================
+# Copyright (C) 2024 Thomas Oliver - All Rights Reserved
+# You may use, distribute and modify this code under the
+# terms of the GPL license distributed with this code.
+#=========================================================
 
 #=========================================================
 # PRIVATE MEMBERS
