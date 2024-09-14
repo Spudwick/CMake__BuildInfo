@@ -30,6 +30,8 @@ The generated header is added to the targets *PRIVATE* source list, and an addit
 
 CMakeLists.txt:
 ```cmake
+include(build-info)
+
 add_executable(example "main.c")
 t_build_target_add_header(example "cmake/build.h")
 ```
