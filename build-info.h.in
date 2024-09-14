@@ -1,0 +1,17 @@
+/*===================================================
+ * CMake auto-configured Build information header
+ * Author: https://github.com/Spudwick
+ *=================================================*/
+
+#ifndef @INCLUDE_GAURD_DEF@
+#define @INCLUDE_GAURD_DEF@
+
+#define VERSION_MAJOR @VERSION_MAJOR@
+#define VERSION_MINOR @VERSION_MINOR@
+#define VERSION_PATCH @VERSION_PATCH@
+
+#define CONFIG_TIMESTAMP @CONFIG_TIMESTAMP@
+
+#define BUILD_TIMESTAMP @BUILD_TIMESTAMP@
+
+#endif  /* #ifndef @INCLUDE_GAURD_DEF@ ... */

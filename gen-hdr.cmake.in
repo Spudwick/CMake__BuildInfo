@@ -1,0 +1,14 @@
+# Auto-configured cmake script
+#
+# Build Info Header Generator
+# Author: https://github.com/Spudwick
+
+set(CONFIG_TIMESTAMP @CONFIG_TIMESTAMP@)
+string(TIMESTAMP BUILD_TIMESTAMP "%s" UTC)
+
+# Configure header template file
+set(INCLUDE_GAURD_DEF "@INCLUDE_GAURD_DEF@")
+set(VERSION_MAJOR "@VERSION_MAJOR@")
+set(VERSION_MINOR "@VERSION_MINOR@")
+set(VERSION_PATCH "@VERSION_PATCH@")
+configure_file("@GIT_HDR_TEMPLATE_PATH@" "@OUTPUT_PATH@")
