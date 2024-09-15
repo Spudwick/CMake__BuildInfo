@@ -85,4 +85,4 @@ The version used by the module always consists of 3 components, major/minor/patc
 
 ## License
 
-This code is made available under the GPL 3.0 licence distributed with the repository (See [LICENSE](LICENSE)).
+This code is made available under the [LICENSE](LICENSE) distributed with the repository.
