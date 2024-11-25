@@ -8,17 +8,23 @@
 
 # Auto-configured CMake script - don't modify
 
+# Header file formating.
+set(cfg_INCLUDE_GAURD_DEF "@cfg_INCLUDE_GAURD_DEF@")
+set(cfg_PREFIX "@cfg_PREFIX@")
+
+# Timestamps.
 set(cfg_CONFIG_TIMESTAMP @cfg_CONFIG_TIMESTAMP@)
 string(TIMESTAMP cfg_BUILD_TIMESTAMP "%s" UTC)
 
-# Configure header template file
-set(cfg_INCLUDE_GAURD_DEF "@cfg_INCLUDE_GAURD_DEF@")
+# Compiler information.
 set(cfg_COMPILER_NAME "@cfg_COMPILER_NAME@")
 set(COMPILER_VERSION "@cfg_COMPILER_VERSION@")
 list(GET COMPILER_VERSION 0 cfg_COMPILER_VERSION_MAJOR)
 list(GET COMPILER_VERSION 1 cfg_COMPILER_VERSION_MINOR)
 list(GET COMPILER_VERSION 2 cfg_COMPILER_VERSION_PATCH)
 list(GET COMPILER_VERSION 3 cfg_COMPILER_VERSION_TWEAK)
+
+# Version information.
 set(TARGET_VERSION "@cfg_TARGET_VERSION@")
 list(GET TARGET_VERSION 0 cfg_VERSION_MAJOR)
 list(GET TARGET_VERSION 1 cfg_VERSION_MINOR)

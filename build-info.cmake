@@ -110,9 +110,9 @@ endfunction()
 
 function(_t_build_include_gaurd_def OUT_VAR FILE_PATH)
     set(OPTIONS)
-    set(ONE_VAL_ARGS)
+    set(ONE_VAL_ARGS PREFIX)
     set(MULIT_VAL_ARGS)
-    cmake_parse_arguments(PARSE_ARGV 3
+    cmake_parse_arguments(PARSE_ARGV 2
                         arg
                         "${OPTIONS}" "${ONE_VAL_ARGS}" "${MULIT_VAL_ARGS}")
 
@@ -126,7 +126,7 @@ function(_t_build_include_gaurd_def OUT_VAR FILE_PATH)
     # To uppercase.
     string(TOUPPER ${INCLUDE_GAURD_DEF} INCLUDE_GAURD_DEF)
     # Add prefix and postfix.
-    string(PREPEND INCLUDE_GAURD_DEF "BUILD_")
+    string(PREPEND INCLUDE_GAURD_DEF "${arg_PREFIX}")
     string(APPEND INCLUDE_GAURD_DEF "_INCLUDED")
 
     # Promote to parent scope
@@ -135,7 +135,7 @@ endfunction()
 
 function(_t_build_create_gen_script SCRIPT_PATH INC_DIR HDR_INC_PATH)
     set(OPTIONS)
-    set(ONE_VAL_ARGS TARGET_VERSION COMPILER_NAME COMPILER_VERSION)
+    set(ONE_VAL_ARGS PREFIX TARGET_VERSION COMPILER_NAME COMPILER_VERSION)
     set(MULIT_VAL_ARGS)
     cmake_parse_arguments(PARSE_ARGV 3
                           arg
@@ -143,10 +143,12 @@ function(_t_build_create_gen_script SCRIPT_PATH INC_DIR HDR_INC_PATH)
 
     get_filename_component(BASE_DIR ${SCRIPT_PATH} DIRECTORY)
 
+    message(DEBUG "Prefix        : \"${arg_PREFIX}\"")
     message(DEBUG "Target Ver.   : ${arg_TARGET_VERSION}")
     message(DEBUG "Compiler      : ${arg_COMPILER_NAME}")
     message(DEBUG "Compiler Ver. : ${arg_COMPILER_VERSION}")
 
+    set(cfg_PREFIX "${arg_PREFIX}")
     set(cfg_TARGET_VERSION "${arg_TARGET_VERSION}")
     set(cfg_COMPILER_NAME "${arg_COMPILER_NAME}")
     set(cfg_COMPILER_VERSION "${arg_COMPILER_VERSION}")
@@ -155,7 +157,9 @@ function(_t_build_create_gen_script SCRIPT_PATH INC_DIR HDR_INC_PATH)
     set(cfg_GIT_HDR_TEMPLATE_PATH ${_T_BUILD_HDR_TEMPLATE_PATH})
     set(cfg_OUTPUT_PATH "${INC_DIR}/${HDR_INC_PATH}")
 
-    _t_build_include_gaurd_def(cfg_INCLUDE_GAURD_DEF ${HDR_INC_PATH})
+    _t_build_include_gaurd_def(cfg_INCLUDE_GAURD_DEF ${HDR_INC_PATH}
+        PREFIX "${arg_PREFIX}"
+    )
 
     configure_file(${_T_BUILD_GEN_SCRIPT_TEMPLATE_PATH} ${SCRIPT_PATH}
         @ONLY
@@ -169,7 +173,7 @@ endfunction()
 
 function(t_build_target_define_header TARGET HDR_INC_PATH)
     set(OPTIONS)
-    set(ONE_VAL_ARGS WORKDIR)
+    set(ONE_VAL_ARGS PREFIX)
     set(MULIT_VAL_ARGS)
     cmake_parse_arguments(PARSE_ARGV 2
                           arg
@@ -191,6 +195,7 @@ function(t_build_target_define_header TARGET HDR_INC_PATH)
     _t_build_get_compiler_info(${TARGET})
 
     _t_build_create_gen_script("${SCRIPT_DIR}/hdr-gen.cmake" ${INC_DIR} ${HDR_INC_PATH}
+        PREFIX "${arg_PREFIX}"
         TARGET_VERSION "${TARGET_VERSION}"
         COMPILER_NAME "${COMPILER_NAME}"
         COMPILER_VERSION "${COMPILER_VERSION}"
