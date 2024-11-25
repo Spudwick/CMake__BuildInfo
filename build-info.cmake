@@ -108,6 +108,31 @@ function(_t_build_get_compiler_info TARGET)
     set(COMPILER_VERSION ${COMPILER_VERSION} PARENT_SCOPE)
 endfunction()
 
+function(_t_build_include_gaurd_def OUT_VAR FILE_PATH)
+    set(OPTIONS)
+    set(ONE_VAL_ARGS)
+    set(MULIT_VAL_ARGS)
+    cmake_parse_arguments(PARSE_ARGV 3
+                        arg
+                        "${OPTIONS}" "${ONE_VAL_ARGS}" "${MULIT_VAL_ARGS}")
+
+    set(INCLUDE_GAURD_DEF ${FILE_PATH})
+
+    # Replace path seperators.
+    string(REPLACE "/" "_" INCLUDE_GAURD_DEF ${INCLUDE_GAURD_DEF})
+    string(REPLACE "\\" "_" INCLUDE_GAURD_DEF ${INCLUDE_GAURD_DEF})
+    # Replace extension seperator.
+    string(REPLACE "." "_" INCLUDE_GAURD_DEF ${INCLUDE_GAURD_DEF})
+    # To uppercase.
+    string(TOUPPER ${INCLUDE_GAURD_DEF} INCLUDE_GAURD_DEF)
+    # Add prefix and postfix.
+    string(PREPEND INCLUDE_GAURD_DEF "BUILD_")
+    string(APPEND INCLUDE_GAURD_DEF "_INCLUDED")
+
+    # Promote to parent scope
+    set(${OUT_VAR} ${INCLUDE_GAURD_DEF} PARENT_SCOPE)
+endfunction()
+
 function(_t_build_create_gen_script SCRIPT_PATH INC_DIR HDR_INC_PATH)
     set(OPTIONS)
     set(ONE_VAL_ARGS TARGET_VERSION COMPILER_NAME COMPILER_VERSION)
@@ -126,17 +151,11 @@ function(_t_build_create_gen_script SCRIPT_PATH INC_DIR HDR_INC_PATH)
     set(cfg_COMPILER_NAME "${arg_COMPILER_NAME}")
     set(cfg_COMPILER_VERSION "${arg_COMPILER_VERSION}")
 
-    string(TIMESTAMP CONFIG_TIMESTAMP "%s" UTC)
-    set(GIT_HDR_TEMPLATE_PATH ${_T_BUILD_HDR_TEMPLATE_PATH})
-    set(OUTPUT_PATH "${INC_DIR}/${HDR_INC_PATH}")
+    string(TIMESTAMP cfg_CONFIG_TIMESTAMP "%s" UTC)
+    set(cfg_GIT_HDR_TEMPLATE_PATH ${_T_BUILD_HDR_TEMPLATE_PATH})
+    set(cfg_OUTPUT_PATH "${INC_DIR}/${HDR_INC_PATH}")
 
-    set(INCLUDE_GAURD_DEF ${HDR_INC_PATH})
-    string(REPLACE "/" "_" INCLUDE_GAURD_DEF ${INCLUDE_GAURD_DEF})
-    string(REPLACE "\\" "_" INCLUDE_GAURD_DEF ${INCLUDE_GAURD_DEF})
-    string(REPLACE "." "_" INCLUDE_GAURD_DEF ${INCLUDE_GAURD_DEF})
-    string(TOUPPER ${INCLUDE_GAURD_DEF} INCLUDE_GAURD_DEF)
-    string(PREPEND INCLUDE_GAURD_DEF "BUILD_")
-    string(APPEND INCLUDE_GAURD_DEF "_INCLUDED")
+    _t_build_include_gaurd_def(cfg_INCLUDE_GAURD_DEF ${HDR_INC_PATH})
 
     configure_file(${_T_BUILD_GEN_SCRIPT_TEMPLATE_PATH} ${SCRIPT_PATH}
         @ONLY
