@@ -19,7 +19,8 @@ Running the built executable will print out the information contained in the bui
 
 ```bash
 > example
-Build Version : 4.7.0
-Config Time : 14-09-2024 17:26:24
-Build Time : 14-09-2024 17:28:48
+Compiler      : MSVC (19.29.30157.0)
+Build Version : 4.7.0.0
+Config Time   : 26-11-2024 11:41:04
+Build Time    : 26-11-2024 11:45:54
 ```
