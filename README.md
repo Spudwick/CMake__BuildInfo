@@ -14,17 +14,20 @@ This repository contains a CMake module that can be used to automatically genera
 
 ## Usage
 
-A single function call is used to add a build information header to a pre-defined target.
+A single function call is used to define a build information header for a pre-defined target.
+An interface library is created in the form of `<target>::buildinfo`. This should be linked against using `target_link_libraries`.
 
-```
-t_build_target_add_header(<target> <header include path>)
+```cmake
+t_build_target_define_header(<target> <header include path>)
 ```
 
 `<target>` is the CMake target to add the build information header to.
 
 `<header include path>` is the path that will be used to include the build information header within the project source.
 
-The generated header is added to the targets *PRIVATE* source list, and an additional *PRIVATE* include directory is added such that the header can be included using the specified `<header include path>`.
+The generated *interface* library contains two components...
+ 1. The generated build information header as a *PUBLIC* source file.
+ 2. A *PUBLIC* include directory such that the build header can be included using the specified `<header include path>`.
 
 ### Example
 
@@ -33,7 +36,8 @@ CMakeLists.txt:
 include(build-info)
 
 add_executable(example "main.c")
-t_build_target_add_header(example "cmake/build.h")
+t_build_target_define_header(example "cmake/build.h")
+target_link_libraries(example PRIVATE example::buildinfo)
 ```
 
 main.c:

@@ -98,7 +98,7 @@ endfunction()
 # PUBLIC MEMBERS
 #=========================================================
 
-function(t_build_target_add_header TARGET HDR_INC_PATH)
+function(t_build_target_define_header TARGET HDR_INC_PATH)
     set(OPTIONS)
     set(ONE_VAL_ARGS WORKDIR)
     set(MULIT_VAL_ARGS)
@@ -130,13 +130,19 @@ function(t_build_target_add_header TARGET HDR_INC_PATH)
             _t_build_always_rebuild
     )
 
-    target_include_directories(${TARGET}
-        PRIVATE ${INC_DIR}
+    set(TARGET_LIB _${TARGET}_buildinfo)
+
+    add_library(${TARGET_LIB} INTERFACE)
+
+    target_sources(${TARGET_LIB} INTERFACE
+        ${HDR_PATH}
     )
 
-    target_sources(${TARGET}
-        PRIVATE ${HDR_PATH}
+    target_include_directories(${TARGET_LIB} INTERFACE
+        ${INC_DIR}
     )
+
+    add_library(${TARGET}::buildinfo ALIAS ${TARGET_LIB})
 
     list(POP_BACK CMAKE_MESSAGE_INDENT)
     message(CHECK_PASS "success")
