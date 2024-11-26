@@ -8,13 +8,13 @@
 
 int main( int argc, char *argv[] )
 {
-    static const time_t config_tmstmp = CONFIG_TIMESTAMP;
-    static const time_t build_tmstmp = BUILD_TIMESTAMP;
+    static const time_t config_tmstmp = EXPL_CONFIG_TIMESTAMP;
+    static const time_t build_tmstmp = EXPL_BUILD_TIMESTAMP;
 
-    static const char ver_str[] = QUOTE(VERSION_MAJOR)"."QUOTE(VERSION_MINOR)"."QUOTE(VERSION_PATCH)"."QUOTE(VERSION_TWEAK);
+    static const char ver_str[] = QUOTE(EXPL_VERSION_MAJOR)"."QUOTE(EXPL_VERSION_MINOR)"."QUOTE(EXPL_VERSION_PATCH)"."QUOTE(EXPL_VERSION_TWEAK);
 
-    static const char comp_name[] = COMPILER_NAME;
-    static const char comp_ver_str[] = QUOTE(COMPILER_VERSION_MAJOR)"."QUOTE(COMPILER_VERSION_MINOR)"."QUOTE(COMPILER_VERSION_PATCH)"."QUOTE(COMPILER_VERSION_TWEAK);
+    static const char comp_name[] = EXPL_COMPILER_NAME;
+    static const char comp_ver_str[] = QUOTE(EXPL_COMPILER_VERSION_MAJOR)"."QUOTE(EXPL_COMPILER_VERSION_MINOR)"."QUOTE(EXPL_COMPILER_VERSION_PATCH)"."QUOTE(EXPL_COMPILER_VERSION_TWEAK);
 
     printf("Compiler      : %s (%s)\n", comp_name, comp_ver_str);
 
