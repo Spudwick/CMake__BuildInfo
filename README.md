@@ -58,8 +58,14 @@ The build information is provided in the header through several `#defines`.
 | VERSION_MAJOR | Major component of version |
 | VERSION_MINOR | Minor component of version |
 | VERSION_PATCH | Patch component of version |
+| VERSION_TWEAK | Tweak component of version |
 | CONFIG_TIMESTAMP | Timestamp of when the CMake project was configured, in seconds since the Unix Epoch (UTC) |
 | BUILD_TIMESTAMP | Timestamp of when the project was built, in seconds since the Unix Epoch (UTC) |
+| COMPILER_NAME | String name of compiler |
+| COMPILER_VERSION_MAJOR | Major component of compiler version |
+| COMPILER_VERSION_MINOR | Minor component of compiler version |
+| COMPILER_VERSION_PATCH | Patch component of compiler version |
+| COMPILER_VERSION_TWEAK | Tweak component of compiler version |
 
 ### Versioning
 
@@ -70,7 +76,7 @@ The module attempts to extract the version information from the following places
 This can be specified as below.
 ```cmake
 set_target_properties(example PROPERTIES
-    VERSION 1.2.3
+    VERSION 1.2.3.4
 )
 ```
 
@@ -79,13 +85,13 @@ set_target_properties(example PROPERTIES
 This is specified when defining the project.
 ```cmake
 project(example
-    VERSION 1.2.3
+    VERSION 1.2.3.4
 )
 ```
 
-3) Defaults to `1.0.0`.
+3) Defaults to `1.0.0.0`.
 
-The version used by the module always consists of 3 components, major/minor/patch. If the provided version information contains more or fewer components, the version number is truncated or padded respectively such that there are 3 components.
+The version used by the module always consists of 4 components, major/minor/patch/tweak. If the provided version information contains more or fewer components, the version number is truncated or padded respectively such that there are 4 components.
 
 ## License
 
