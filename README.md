@@ -36,7 +36,9 @@ CMakeLists.txt:
 include(build-info)
 
 add_executable(example "main.c")
-t_build_target_define_header(example "cmake/build.h")
+t_build_target_define_header(example "cmake/build.h"
+    PREFIX "EXPL_"
+)
 target_link_libraries(example PRIVATE example::buildinfo)
 ```
 
@@ -66,6 +68,10 @@ The build information is provided in the header through several `#defines`.
 | COMPILER_VERSION_MINOR | Minor component of compiler version |
 | COMPILER_VERSION_PATCH | Patch component of compiler version |
 | COMPILER_VERSION_TWEAK | Tweak component of compiler version |
+
+### Prefix
+
+A prefix can be specified that is added to the generated defines. This is defined using the `PREFIX` argument passed to `t_build_target_define_header`.
 
 ### Versioning
 
