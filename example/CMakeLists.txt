@@ -17,7 +17,9 @@ set_target_properties(example PROPERTIES
     VERSION 4.7
 )
 
-t_build_target_define_header(example "cmake/build.h")
+t_build_target_define_header(example "cmake/build.h"
+    PREFIX "EXPL_"
+)
 
 target_link_libraries(example
     PRIVATE example::buildinfo
